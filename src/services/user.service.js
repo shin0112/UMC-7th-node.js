@@ -13,7 +13,6 @@ export const userSignUp = async (data) => {
     gender: data.gender,
     birth: data.birth,
     address: data.address,
-    detailAddress: data.detailAddress,
     phoneNumber: data.phoneNumber,
   });
 
