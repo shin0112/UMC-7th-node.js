@@ -1,103 +1,50 @@
-import { pool } from "../db.config.js";
+import { pool, prisma } from "../db.config.js";
 
 // User 데이터 삽입
-export const addUser = async (data) => {
-  const conn = await pool.getConnection();
+export const addMember = async (data) => {
+  const member = await prisma.member.findFirst({
+    where: { email: data.email },
+  });
 
-  try {
-    const [confirm] = await pool.query(
-      `SELECT EXISTS(SELECT 1 FROM user WHERE email = ?) as isExistEmail;`,
-      data.email
-    );
-
-    if (confirm[0].isExistEmail) {
-      return null;
-    }
-
-    const [result] = await pool.query(
-      `INSERT INTO user (email, name, gender, birth, address, phone_number) VALUES (?, ?, ?, ?, ?, ?);`,
-      [
-        data.email,
-        data.name,
-        data.gender,
-        data.birth,
-        data.address,
-        data.phoneNumber,
-      ]
-    );
-
-    return result.insertId;
-  } catch (err) {
-    throw new Error(
-      `오류가 발생했어요. 요청 파라미터를 확인해주세요. (${err})`
-    );
-  } finally {
-    conn.release();
+  if (member) {
+    return null;
   }
+
+  const created = await prisma.member.create({ data: data });
+  return created.id;
 };
 
 // 사용자 정보 얻기
-export const getUser = async (userId) => {
-  const conn = await pool.getConnection();
+export const getMember = async (memberId) => {
+  const member = await prisma.member.findFirstOrThrow({
+    where: { id: memberId },
+  });
 
-  try {
-    const [user] = await pool.query(`SELECT * FROM user WHERE id = ?;`, userId);
-
-    console.log(user);
-
-    if (user.length == 0) {
-      return null;
-    }
-
-    return user;
-  } catch (err) {
-    throw new Error(
-      `오류가 발생했어요. 요청 파라미터를 확인해주세요. (${err})`
-    );
-  } finally {
-    conn.release();
-  }
+  return member;
 };
 
 // 음식 선호 카테고리 매핑
-export const setPreference = async (userId, foodCategoryId) => {
-  const conn = await pool.getConnection();
-
-  try {
-    await pool.query(
-      `INSERT INTO user_prefer (food_category_id, user_id) VALUES (?, ?);`,
-      [foodCategoryId, userId]
-    );
-
-    return;
-  } catch (err) {
-    throw new Error(
-      `오류가 발생했어요. 요청 파라미터를 확인해주세요. (${err})`
-    );
-  } finally {
-    conn.release();
-  }
+export const setPreference = async (memberId, foodId) => {
+  await prisma.MemberFood.create({
+    data: {
+      memberId: memberId,
+      foodId: foodId,
+    },
+  });
 };
 
 // 사용자 선호 카테고리 반환
-export const getUserPreferencesByUserId = async (userId) => {
-  const conn = await pool.getConnection();
+export const getUserPreferencesByMemberId = async (memberId) => {
+  const preferences = await prisma.MemberFood.findMany({
+    select: {
+      id: true,
+      memberId: true,
+      foodId: true,
+      food: true,
+    },
+    where: { memberId: memberId },
+    orderBy: { foodId: "asc" },
+  });
 
-  try {
-    const [preferences] = await pool.query(
-      `SELECT up.id, up.food_category_id, up.user_id, fcl.name
-       FROM user_prefer up
-       JOIN food_category fcl ON up.food_category_id = fcl.id
-       WHERE up.user_id = ? ORDER BY up.food_category_id ASC;`,
-      [userId]
-    );
-
-    return preferences;
-  } catch (err) {
-    throw new Error(
-      `오류가 발생했어요. 요청 파라미터를 확인해주세요. (${err})`
-    );
-  } finally {
-    conn.release();
-  }
+  return preferences;
 };

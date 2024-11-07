@@ -1,7 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import { handleUserSignUp } from "./controllers/user.controllers.js";
+import { handleMemberSignUp } from "./controllers/user.controllers.js";
 import { handleStoreAdd } from "./controllers/store.controller.js";
 
 dotenv.config();
@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.post("/api/v1/users/signup", handleUserSignUp);
+app.post("/members/signup", handleMemberSignUp);
 
 // store
 app.post("/stores", handleStoreAdd);
