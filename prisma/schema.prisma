@@ -24,6 +24,7 @@ model Member {
   photoLink     String   @map("photo_link") @db.VarChar(255) @default("")
   
   MemberFoods MemberFood[]
+  MemberMissions MemberMission[]
   Reviews Review[]
 
   @@map("member")
@@ -95,6 +96,21 @@ model Mission {
   store         Store   @relation(fields: [storeId], references: [id])
   storeId       Int     @map("store_id")
 
+  MemberMissions MemberMission[]
+
   @@index([storeId], map: "store_id")
   @@map("mission")
+}
+
+model MemberMission {
+  id            Int     @id @default(autoincrement())
+  status        String  @db.VarChar(255) @default("CHALLENGING")
+  member        Member  @relation(fields: [memberId], references: [id])
+  memberId      Int     @map("member_id")
+  mission       Mission @relation(fields: [missionId], references: [id])
+  missionId     Int     @map("mission_id")
+
+  @@index([memberId], map: "member_id")
+  @@index([missionId], map: "mission_id")
+  @@map("member_mission")
 }

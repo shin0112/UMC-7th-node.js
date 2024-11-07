@@ -12,3 +12,10 @@ export const responseFromMission = (mission) => {
     score: mission.score,
   };
 };
+
+export const responseFromMemberMission = (memberMission) => {
+  return {
+    id: memberMission.id,
+    status: memberMission.status,
+  };
+};

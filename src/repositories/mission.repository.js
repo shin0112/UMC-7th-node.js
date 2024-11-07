@@ -14,3 +14,22 @@ export const getMission = async (missionId) => {
 
   return mission;
 };
+
+export const addMemberMission = async (missionId, memberId) => {
+  const created = await prisma.memberMission.create({
+    data: {
+      missionId: missionId,
+      memberId: memberId,
+    },
+  });
+
+  return created.id;
+};
+
+export const getMemberMission = async (memberMissionId) => {
+  const memberMission = await prisma.memberMission.findFirstOrThrow({
+    where: { id: memberMissionId },
+  });
+
+  return memberMission;
+};
