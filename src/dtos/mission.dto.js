@@ -19,3 +19,13 @@ export const responseFromMemberMission = (memberMission) => {
     status: memberMission.status,
   };
 };
+
+export const responseFromMemberMissions = ({ memberMissions }) => {
+  const missions = memberMissions.map((memberMission) =>
+    responseFromMission(memberMission.mission)
+  );
+
+  return {
+    missions: missions,
+  };
+};

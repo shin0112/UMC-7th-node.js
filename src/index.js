@@ -8,6 +8,7 @@ import {
   handleReviewAdd,
 } from "./controllers/review.controller.js";
 import {
+  handleMemberMissionRead,
   handleMissionAdd,
   handleMissionChallenge,
 } from "./controllers/mission.controller.js";
@@ -34,7 +35,9 @@ app.get("/stores/:storeId/reviews", handleListStoreReviews);
 app.post("/stores/:storeId/reviews", handleReviewAdd);
 app.post("/stores/:storeId/missions", handleMissionAdd);
 
+// mission
 app.post("/missions/:missionId", handleMissionChallenge);
+app.get("/missions/mine/:memberId", handleMemberMissionRead);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
