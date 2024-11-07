@@ -1,5 +1,7 @@
+import { responseFromMissions } from "../dtos/mission.dto.js";
 import {
   addStore,
+  getMissionsByStoreId,
   getRegionIdByRegion,
 } from "../repositories/store.repository.js";
 
@@ -15,4 +17,10 @@ export const createStore = async (data) => {
   });
 
   return;
+};
+
+export const readMissionsByStoreId = async (storeId) => {
+  const missions = await getMissionsByStoreId(storeId);
+
+  return responseFromMissions(missions);
 };

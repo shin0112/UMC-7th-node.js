@@ -18,3 +18,11 @@ export const getRegionIdByRegion = async (regionName) => {
 
   return region;
 };
+
+export const getMissionsByStoreId = async (storeId) => {
+  const missions = await prisma.mission.findMany({
+    where: { storeId: storeId },
+  });
+
+  return missions;
+};

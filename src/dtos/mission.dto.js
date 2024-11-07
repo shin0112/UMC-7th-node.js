@@ -29,3 +29,7 @@ export const responseFromMemberMissions = ({ memberMissions }) => {
     missions: missions,
   };
 };
+
+export const responseFromMissions = (missions) => {
+  return missions.map((mission) => responseFromMission(mission));
+};
