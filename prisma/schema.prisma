@@ -24,6 +24,7 @@ model Member {
   photoLink     String   @map("photo_link") @db.VarChar(255) @default("")
   
   MemberFoods MemberFood[]
+  Reviews Review[]
 
   @@map("member")
 }
@@ -47,4 +48,29 @@ model MemberFood {
   @@index([foodId], map: "food_id")
   @@index([memberId], map: "member_id")
   @@map("member_food")
+}
+
+model Store {
+  id            Int     @id @default(autoincrement())
+  address       String  @db.VarChar(100)
+  name          String  @db.VarChar(30)
+  score         Float   @db.Float
+
+  Reviews Review[]
+
+  @@map("store")
+}
+
+model Review {
+  id            Int     @id @default(autoincrement())
+  content       String  @db.VarChar(255)
+  star          Float   @db.Float
+  member        Member  @relation(fields: [memberId], references: [id])
+  memberId      Int     @map("member_id")
+  store         Store   @relation(fields: [storeId], references: [id])
+  storeId       Int     @map("store_id")
+ 
+  @@index([memberId], map: "member_id")
+  @@index([storeId], map: "store_id")
+  @@map("review")
 }
