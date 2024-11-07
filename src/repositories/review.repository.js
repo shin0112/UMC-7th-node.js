@@ -15,3 +15,19 @@ export const getAllStoreReviews = async (storeId, cursor) => {
 
   return reviews;
 };
+
+export const addReview = async (data) => {
+  const created = await prisma.Review.create({
+    data: data,
+  });
+
+  return created.id;
+};
+
+export const getReview = async (reviewId) => {
+  const review = await prisma.Review.findFirstOrThrow({
+    where: { id: reviewId },
+  });
+
+  return review;
+};
