@@ -54,11 +54,23 @@ model Store {
   id            Int     @id @default(autoincrement())
   address       String  @db.VarChar(100)
   name          String  @db.VarChar(30)
-  score         Float   @db.Float
+  score         Float   @db.Float @default(0.0)
+  region        Region  @relation(fields: [regionId], references: [id])
+  regionId      Int     @map("region_id")
 
   Reviews Review[]
 
+  @@index([regionId], map: "region_id")
   @@map("store")
+}
+
+model Region {
+  id            Int     @id @default(autoincrement())
+  name          String  @db.VarChar(255) @unique
+
+  Stores Store[]
+
+  @@map("region")
 }
 
 model Review {
