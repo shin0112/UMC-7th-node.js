@@ -6,7 +6,7 @@ export const bodyToUser = (body) => {
     name: body.name,
     gender: body.gender,
     birth,
-    address: body.address || "",
+    address: body.address,
     phoneNumber: body.phoneNumber,
     preferences: body.preferences,
   };
