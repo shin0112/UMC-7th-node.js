@@ -59,6 +59,7 @@ model Store {
   regionId      Int     @map("region_id")
 
   Reviews Review[]
+  Missions Mission[]
 
   @@index([regionId], map: "region_id")
   @@map("store")
@@ -85,4 +86,15 @@ model Review {
   @@index([memberId], map: "member_id")
   @@index([storeId], map: "store_id")
   @@map("review")
+}
+
+model Mission {
+  id            Int     @id @default(autoincrement())
+  money         Int     @db.Int
+  score         Int     @db.Int
+  store         Store   @relation(fields: [storeId], references: [id])
+  storeId       Int     @map("store_id")
+
+  @@index([storeId], map: "store_id")
+  @@map("mission")
 }

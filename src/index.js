@@ -7,6 +7,7 @@ import {
   handleListStoreReviews,
   handleReviewAdd,
 } from "./controllers/review.controller.js";
+import { handleMissionAdd } from "./controllers/mission.controller.js";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.post("/members/signup", handleMemberSignUp);
 app.post("/stores", handleStoreAdd);
 app.get("/stores/:storeId/reviews", handleListStoreReviews);
 app.post("/stores/:storeId/reviews", handleReviewAdd);
+app.post("/stores/:storeId/missions", handleMissionAdd);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
