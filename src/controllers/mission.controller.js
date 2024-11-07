@@ -3,6 +3,7 @@ import { bodyToMission } from "../dtos/mission.dto.js";
 import {
   createMemberMission,
   createMission,
+  readMyChallengingMissions,
   readMyMissions,
 } from "../services/mission.service.js";
 
@@ -26,5 +27,14 @@ export const handleMissionChallenge = async (req, res, next) => {
 
 export const handleMemberMissionRead = async (req, res, next) => {
   const missions = await readMyMissions(parseInt(req.params.memberId));
+  res.status(StatusCodes.OK).json({ result: missions });
+};
+
+export const handleMissionMineChallenge = async (req, res, next) => {
+  const status = req.query.status;
+  const missions = await readMyChallengingMissions(
+    parseInt(req.body.memberId),
+    status
+  );
   res.status(StatusCodes.OK).json({ result: missions });
 };

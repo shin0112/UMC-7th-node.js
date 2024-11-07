@@ -9,6 +9,7 @@ import {
   getMemberMission,
   getMission,
   getMemberMissionsByMemberId,
+  getMemberMissionsByStatus,
 } from "../repositories/mission.repository.js";
 
 export const createMission = async (storeId, data) => {
@@ -33,5 +34,10 @@ export const createMemberMission = async (missionId, memberId) => {
 
 export const readMyMissions = async (memberId) => {
   const memberMissions = await getMemberMissionsByMemberId(memberId);
+  return responseFromMemberMissions({ memberMissions });
+};
+
+export const readMyChallengingMissions = async (memberId, status) => {
+  const memberMissions = await getMemberMissionsByStatus(memberId, status);
   return responseFromMemberMissions({ memberMissions });
 };
