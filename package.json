@@ -8,7 +8,7 @@
     "start": "node src/index.js",
     "dev": "nodemon --exec node src/index.js"
   },
-  "author": "shin0112 <wnslcosltimo12@gmail.com>",
+  "author": "Jueun <wnslcosltimo12@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
