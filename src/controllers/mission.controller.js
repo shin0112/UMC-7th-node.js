@@ -7,7 +7,7 @@ import {
   readMyMissions,
 } from "../services/mission.service.js";
 
-export const handleMissionAdd = async (req, res, next) => {
+export const handleMissionAdd = async (req, res) => {
   const mission = await createMission(
     parseInt(req.params.storeId),
     bodyToMission(req.body)
@@ -16,7 +16,7 @@ export const handleMissionAdd = async (req, res, next) => {
   res.status(StatusCodes.CREATED).json({ result: mission });
 };
 
-export const handleMissionChallenge = async (req, res, next) => {
+export const handleMissionChallenge = async (req, res) => {
   const memberMission = await createMemberMission(
     parseInt(req.params.missionId),
     req.body.memberId
@@ -25,12 +25,12 @@ export const handleMissionChallenge = async (req, res, next) => {
   res.status(StatusCodes.CREATED).json({ result: memberMission });
 };
 
-export const handleMemberMissionRead = async (req, res, next) => {
+export const handleMemberMissionRead = async (req, res) => {
   const missions = await readMyMissions(parseInt(req.params.memberId));
   res.status(StatusCodes.OK).json({ result: missions });
 };
 
-export const handleMissionMineChallenge = async (req, res, next) => {
+export const handleMissionMineChallenge = async (req, res) => {
   const status = req.query.status;
   const missions = await readMyChallengingMissions(
     parseInt(req.body.memberId),
