@@ -20,8 +20,8 @@ export const responseFromMemberMission = (memberMission) => {
   };
 };
 
-export const responseFromMemberMissions = ({ memberMissions }) => {
-  const missions = memberMissions.map((memberMission) =>
+export const responseFromMemberMissionList = (memberMissionList) => {
+  const missions = memberMissionList.map((memberMission) =>
     responseFromMission(memberMission.mission)
   );
 

@@ -1,14 +1,12 @@
 import express from "express";
 import {
-  handleMemberMissionRead,
   handleMissionChallenge,
-  handleMissionMineChallenge,
+  handleMemberMissionListReadByStatus,
 } from "../controllers/mission.controller.js";
 
 const router = express.Router();
 
 router.post("/:missionId", handleMissionChallenge);
-router.get("/mine/:memberId", handleMemberMissionRead);
-router.get("", handleMissionMineChallenge);
+router.get("/mine/:memberId", handleMemberMissionListReadByStatus);
 
 export default router;

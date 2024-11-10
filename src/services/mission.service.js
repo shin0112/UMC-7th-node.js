@@ -1,6 +1,6 @@
 import {
   responseFromMemberMission,
-  responseFromMemberMissions,
+  responseFromMemberMissionList,
   responseFromMission,
 } from "../dtos/mission.dto.js";
 import {
@@ -8,8 +8,8 @@ import {
   addMission,
   getMemberMission,
   getMission,
-  getMemberMissionsByMemberId,
-  getMemberMissionsByStatus,
+  getMemberMissionsByMemberId as getMemberMissionListByMemberId,
+  getMemberMissionListByStatus,
 } from "../repositories/mission.repository.js";
 
 export const createMission = async (storeId, data) => {
@@ -33,11 +33,16 @@ export const createMemberMission = async (missionId, memberId) => {
 };
 
 export const readMyMissions = async (memberId) => {
-  const memberMissions = await getMemberMissionsByMemberId(memberId);
-  return responseFromMemberMissions({ memberMissions });
+  const memberMissionList = await getMemberMissionListByMemberId(memberId);
+
+  return responseFromMemberMissionList(memberMissionList);
 };
 
-export const readMyChallengingMissions = async (memberId, status) => {
-  const memberMissions = await getMemberMissionsByStatus(memberId, status);
-  return responseFromMemberMissions({ memberMissions });
+export const readMemberMissionListByStatus = async (memberId, status) => {
+  const memberMissionList = await getMemberMissionListByStatus(
+    memberId,
+    status
+  );
+
+  return responseFromMemberMissionList(memberMissionList);
 };

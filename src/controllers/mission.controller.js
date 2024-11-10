@@ -3,8 +3,8 @@ import { bodyToMission } from "../dtos/mission.dto.js";
 import {
   createMemberMission,
   createMission,
-  readMyChallengingMissions,
-  readMyMissions,
+  readMemberMissionListByStatus,
+  readMyMissions as readMemberMissionList,
 } from "../services/mission.service.js";
 
 /**
@@ -52,7 +52,7 @@ export const handleMissionChallenge = async (req, res) => {
 };
 
 /**
- * 내 미션 리스트 조회하기
+ * 내 미션 리스트 조회하기 (param 존재 시 상태로 검색)
  * @param {*} req 
  * @param {{
     "result": {
@@ -71,38 +71,13 @@ export const handleMissionChallenge = async (req, res) => {
     }
 }} res 
  */
-export const handleMemberMissionRead = async (req, res) => {
-  const missions = await readMyMissions(parseInt(req.params.memberId));
-  res.status(StatusCodes.OK).json({ result: missions });
-};
-
-/**
- * 내 진행 중인 미션 히스트 조회하기
- * @param {{
-    "memberId": 1
-}} req
- * @param {{
-    "result": {
-        "missions": [
-            {
-                "id": 1,
-                "money": 10000,
-                "score": 500
-            },
-            {
-                "id": 1,
-                "money": 10000,
-                "score": 500
-            }
-        ]
-    }
-}} res
- */
-export const handleMissionMineChallenge = async (req, res) => {
+export const handleMemberMissionListReadByStatus = async (req, res) => {
   const status = req.query.status;
-  const missions = await readMyChallengingMissions(
-    parseInt(req.body.memberId),
-    status
-  );
+  const memberId = parseInt(req.params.memberId);
+
+  const missions = status
+    ? await readMemberMissionListByStatus(memberId, status)
+    : await readMemberMissionList(memberId);
+
   res.status(StatusCodes.OK).json({ result: missions });
 };
