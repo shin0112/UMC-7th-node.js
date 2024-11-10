@@ -4,7 +4,7 @@ import {
   createMemberMission,
   createMission,
   readMemberMissionListByStatus,
-  readMyMissions as readMemberMissionList,
+  readMemberMissionList,
 } from "../services/mission.service.js";
 
 /**
@@ -21,7 +21,7 @@ import {
     }
 }} res 
  */
-export const handleMissionAdd = async (req, res) => {
+export const handleMissionCreate = async (req, res) => {
   const mission = await createMission(
     parseInt(req.params.storeId),
     bodyToMission(req.body)
@@ -42,7 +42,7 @@ export const handleMissionAdd = async (req, res) => {
     }
 }} res
  */
-export const handleMissionChallenge = async (req, res) => {
+export const handleMemberMissionCreate = async (req, res) => {
   const memberMission = await createMemberMission(
     parseInt(req.params.missionId),
     req.body.memberId

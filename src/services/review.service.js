@@ -1,12 +1,12 @@
 import { responseFromReview, responseFromReviews } from "../dtos/review.dto.js";
 import {
   addReview,
-  getAllStoreReviews,
+  getStoreReviewList,
   getReview,
 } from "../repositories/review.repository.js";
 
-export const listStoreReviews = async (storeId, cursor) => {
-  const reviews = await getAllStoreReviews(storeId, cursor);
+export const readStoreReviewList = async (storeId, cursor) => {
+  const reviews = await getStoreReviewList(storeId, cursor);
   return responseFromReviews(reviews);
 };
 

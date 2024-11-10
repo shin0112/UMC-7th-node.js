@@ -1,20 +1,20 @@
 import express from "express";
-import { handleMissionAdd } from "../controllers/mission.controller.js";
+import { handleMissionCreate } from "../controllers/mission.controller.js";
 import {
-  handleListStoreReviews,
-  handleReviewAdd,
+  handleStoreReviewListRead,
+  handleReviewCreate,
 } from "../controllers/review.controller.js";
 import {
-  handleStoreAdd,
+  handleStoreCreate,
   handleStoreMissionRead,
 } from "../controllers/store.controller.js";
 
 const router = express.Router();
 
-router.post("", handleStoreAdd);
-router.get("/:storeId/reviews", handleListStoreReviews);
-router.post("/:storeId/reviews", handleReviewAdd);
-router.post("/:storeId/missions", handleMissionAdd);
+router.post("", handleStoreCreate);
+router.get("/:storeId/reviews", handleStoreReviewListRead);
+router.post("/:storeId/reviews", handleReviewCreate);
+router.post("/:storeId/missions", handleMissionCreate);
 router.get("/:storeId/missions", handleStoreMissionRead);
 
 export default router;

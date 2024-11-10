@@ -2,8 +2,8 @@ import { responseFromMember } from "../dtos/member.dto.js";
 import {
   addMember,
   getMember,
-  getUserPreferencesByMemberId,
-  setPreference,
+  getMemberFoodByMemberId,
+  addMemberFood,
 } from "../repositories/member.repository.js";
 
 export const memberSignUp = async (data) => {
@@ -21,11 +21,11 @@ export const memberSignUp = async (data) => {
   }
 
   for (const preference of data.preferences) {
-    await setPreference(joinMemberId, preference);
+    await addMemberFood(joinMemberId, preference);
   }
 
   const member = await getMember(joinMemberId);
-  const preferences = await getUserPreferencesByMemberId(joinMemberId);
+  const preferences = await getMemberFoodByMemberId(joinMemberId);
 
   return responseFromMember({ member, preferences });
 };

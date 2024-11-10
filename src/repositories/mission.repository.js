@@ -34,7 +34,7 @@ export const getMemberMission = async (memberMissionId) => {
   return memberMission;
 };
 
-export const getMemberMissionsByMemberId = async (memberId) => {
+export const getMemberMissionListByMemberId = async (memberId) => {
   const memberMissionList = await prisma.MemberMission.findMany({
     select: {
       id: true,

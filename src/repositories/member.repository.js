@@ -24,7 +24,7 @@ export const getMember = async (memberId) => {
 };
 
 // 음식 선호 카테고리 매핑
-export const setPreference = async (memberId, foodId) => {
+export const addMemberFood = async (memberId, foodId) => {
   await prisma.MemberFood.create({
     data: {
       memberId: memberId,
@@ -34,7 +34,7 @@ export const setPreference = async (memberId, foodId) => {
 };
 
 // 사용자 선호 카테고리 반환
-export const getUserPreferencesByMemberId = async (memberId) => {
+export const getMemberFoodByMemberId = async (memberId) => {
   const preferences = await prisma.MemberFood.findMany({
     select: {
       id: true,

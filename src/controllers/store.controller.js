@@ -14,7 +14,7 @@ import {
 }} res 
  * @param {*} next 
  */
-export const handleStoreAdd = async (req, res, next) => {
+export const handleStoreCreate = async (req, res, next) => {
   const region = req.query.region;
   const store = await createStore(bodyToStore(req.body, region));
 

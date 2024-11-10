@@ -1,6 +1,9 @@
 import { StatusCodes } from "http-status-codes";
 import { bodyToReview } from "../dtos/review.dto.js";
-import { createReview, listStoreReviews } from "../services/review.service.js";
+import {
+  createReview,
+  readStoreReviewList,
+} from "../services/review.service.js";
 
 /**
  * 가게 리뷰 리스트 조회하기
@@ -35,8 +38,8 @@ import { createReview, listStoreReviews } from "../services/review.service.js";
 }} res
  * @param {*} next
  */
-export const handleListStoreReviews = async (req, res, next) => {
-  const reviews = await listStoreReviews(
+export const handleStoreReviewListRead = async (req, res, next) => {
+  const reviews = await readStoreReviewList(
     parseInt(req.params.storeId),
     typeof req.query.cursor === "string" ? parseInt(req.query.cursor) : 0
   );
@@ -59,7 +62,7 @@ export const handleListStoreReviews = async (req, res, next) => {
 }} res
  * @param {*} next
  */
-export const handleReviewAdd = async (req, res, next) => {
+export const handleReviewCreate = async (req, res, next) => {
   const review = await createReview(
     parseInt(req.params.storeId),
     bodyToReview(req.body)

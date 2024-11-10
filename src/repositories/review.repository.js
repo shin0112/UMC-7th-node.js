@@ -1,6 +1,6 @@
 import { prisma } from "../db.config.js";
 
-export const getAllStoreReviews = async (storeId, cursor) => {
+export const getStoreReviewList = async (storeId, cursor) => {
   const reviews = await prisma.Review.findMany({
     select: {
       id: true,
