@@ -6,7 +6,7 @@ import {
 import {
   addMemberMission,
   addMission,
-  getMemberMission,
+  getMemberMissionById,
   getMission,
   getMemberMissionListByMemberId,
   getMemberMissionListByStatus,
@@ -18,7 +18,6 @@ export const createMission = async (storeId, data) => {
     money: data.money,
     score: data.score,
   });
-
   const mission = await getMission(missionId);
 
   return responseFromMission(mission);
@@ -26,7 +25,6 @@ export const createMission = async (storeId, data) => {
 
 export const createMemberMission = async (missionId, memberId) => {
   const memberMissionId = await addMemberMission(missionId, memberId);
-
   const memberMission = await getMemberMission(memberMissionId);
 
   return responseFromMemberMission(memberMission);

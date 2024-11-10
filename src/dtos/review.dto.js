@@ -1,4 +1,4 @@
-export const responseFromReviews = (reviews) => {
+export const responseFromReviewList = (reviews) => {
   return {
     data: reviews,
     pagination: {

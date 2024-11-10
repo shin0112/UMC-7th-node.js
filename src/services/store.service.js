@@ -1,4 +1,4 @@
-import { responseFromMissions } from "../dtos/mission.dto.js";
+import { responseFromMissionList } from "../dtos/mission.dto.js";
 import { responseFromStore } from "../dtos/store.dto.js";
 import {
   addStore,
@@ -8,9 +8,8 @@ import {
 } from "../repositories/store.repository.js";
 
 export const createStore = async (data) => {
-  const regionResult = await getRegionIdByRegion(data.region);
-
-  const regionId = regionResult.id;
+  const region = await getRegionIdByRegion(data.region);
+  const regionId = region.id;
 
   const storeId = await addStore({
     name: data.name,
@@ -23,7 +22,7 @@ export const createStore = async (data) => {
 };
 
 export const readMissionsByStoreId = async (storeId) => {
-  const missions = await getMissionsByStoreId(storeId);
+  const missionId = await getMissionsByStoreId(storeId);
 
-  return responseFromMissions(missions);
+  return responseFromMissionList(missionId);
 };

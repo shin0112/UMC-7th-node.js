@@ -12,7 +12,7 @@ export const bodyToMember = (body) => {
   };
 };
 
-export const responseFromMember = ({ member, preferences }) => {
+export const responseFromMember = (member, preferences) => {
   const preferFoods = preferences.map((preference) => preference.food.name);
 
   return {

@@ -25,11 +25,9 @@ export const responseFromMemberMissionList = (memberMissionList) => {
     responseFromMission(memberMission.mission)
   );
 
-  return {
-    missions: missions,
-  };
+  return { missions: missions };
 };
 
-export const responseFromMissions = (missions) => {
-  return missions.map((mission) => responseFromMission(mission));
+export const responseFromMissionList = (missionList) => {
+  return missionList.map((mission) => responseFromMission(mission));
 };

@@ -25,7 +25,7 @@ export const memberSignUp = async (data) => {
   }
 
   const member = await getMember(joinMemberId);
-  const preferences = await getMemberFoodByMemberId(joinMemberId);
+  const preferenceList = await getMemberFoodByMemberId(joinMemberId);
 
-  return responseFromMember({ member, preferences });
+  return responseFromMember(member, preferenceList);
 };
