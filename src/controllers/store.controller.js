@@ -7,9 +7,9 @@ import {
 
 export const handleStoreAdd = async (req, res, next) => {
   const region = req.query.region;
-  await createStore(bodyToStore(req.body, region));
+  const store = await createStore(bodyToStore(req.body, region));
 
-  res.status(StatusCodes.CREATED).send();
+  res.status(StatusCodes.CREATED).json({ result: store });
 };
 
 export const handleStoreMissionRead = async (req, res, next) => {

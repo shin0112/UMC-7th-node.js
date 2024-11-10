@@ -13,8 +13,18 @@ export const addStore = async (data) => {
   return created.id;
 };
 
+export const getStoreById = async (storeId) => {
+  const store = await prisma.store.findFirstOrThrow({
+    where: { id: storeId },
+  });
+
+  return store;
+};
+
 export const getRegionIdByRegion = async (regionName) => {
-  const region = await prisma.region.findFirst({ where: { name: regionName } });
+  const region = await prisma.region.findFirstOrThrow({
+    where: { name: regionName },
+  });
 
   return region;
 };
