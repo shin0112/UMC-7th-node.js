@@ -21,13 +21,17 @@ import {
     }
 }} res 
  */
-export const handleMissionCreate = async (req, res) => {
-  const mission = await createMission(
-    parseInt(req.params.storeId),
-    bodyToMission(req.body)
-  );
+export const handleMissionCreate = async (req, res, next) => {
+  try {
+    const mission = await createMission(
+      parseInt(req.params.storeId),
+      bodyToMission(req.body)
+    );
 
-  res.status(StatusCodes.CREATED).json({ result: mission });
+    res.status(StatusCodes.CREATED).json({ result: mission });
+  } catch (error) {
+    next(error);
+  }
 };
 
 /**
@@ -42,13 +46,17 @@ export const handleMissionCreate = async (req, res) => {
     }
 }} res
  */
-export const handleMemberMissionCreate = async (req, res) => {
-  const memberMission = await createMemberMission(
-    parseInt(req.params.missionId),
-    req.body.memberId
-  );
+export const handleMemberMissionCreate = async (req, res, next) => {
+  try {
+    const memberMission = await createMemberMission(
+      parseInt(req.params.missionId),
+      req.body.memberId
+    );
 
-  res.status(StatusCodes.CREATED).json({ result: memberMission });
+    res.status(StatusCodes.CREATED).json({ result: memberMission });
+  } catch (error) {
+    next(error);
+  }
 };
 
 /**
@@ -71,7 +79,7 @@ export const handleMemberMissionCreate = async (req, res) => {
     }
 }} res 
  */
-export const handleMemberMissionListReadByStatus = async (req, res) => {
+export const handleMemberMissionListReadByStatus = async (req, res, next) => {
   const status = req.query.status;
   const memberId = parseInt(req.params.memberId);
 

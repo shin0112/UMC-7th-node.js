@@ -15,10 +15,13 @@ import {
  * @param {*} next 
  */
 export const handleStoreCreate = async (req, res, next) => {
-  const region = req.query.region;
-  const store = await createStore(bodyToStore(req.body, region));
+  try {
+    const store = await createStore(bodyToStore(req.body, req.query.region));
 
-  res.status(StatusCodes.CREATED).json({ result: store });
+    res.status(StatusCodes.CREATED).json({ result: store });
+  } catch (error) {
+    next(error);
+  }
 };
 
 /**
@@ -43,7 +46,11 @@ export const handleStoreCreate = async (req, res, next) => {
  * @param {*} next 
  */
 export const handleStoreMissionRead = async (req, res, next) => {
-  const missions = await readMissionsByStoreId(parseInt(req.params.storeId));
+  try {
+    const missions = await readMissionsByStoreId(parseInt(req.params.storeId));
 
-  res.status(StatusCodes.OK).json(missions);
+    res.status(StatusCodes.OK).json(missions);
+  } catch (error) {
+    next(error);
+  }
 };

@@ -39,11 +39,16 @@ import {
  * @param {*} next
  */
 export const handleStoreReviewListRead = async (req, res, next) => {
-  const reviews = await readStoreReviewList(
-    parseInt(req.params.storeId),
-    typeof req.query.cursor === "string" ? parseInt(req.query.cursor) : 0
-  );
-  res.status(StatusCodes.OK).json(reviews);
+  try {
+    const reviews = await readStoreReviewList(
+      parseInt(req.params.storeId),
+      typeof req.query.cursor === "string" ? parseInt(req.query.cursor) : 0
+    );
+
+    res.status(StatusCodes.OK).json(reviews);
+  } catch (error) {
+    next(error);
+  }
 };
 
 /**
@@ -63,10 +68,14 @@ export const handleStoreReviewListRead = async (req, res, next) => {
  * @param {*} next
  */
 export const handleReviewCreate = async (req, res, next) => {
-  const review = await createReview(
-    parseInt(req.params.storeId),
-    bodyToReview(req.body)
-  );
+  try {
+    const review = await createReview(
+      parseInt(req.params.storeId),
+      bodyToReview(req.body)
+    );
 
-  res.status(StatusCodes.CREATED).json({ result: review });
+    res.status(StatusCodes.CREATED).json({ result: review });
+  } catch (error) {
+    next(error);
+  }
 };

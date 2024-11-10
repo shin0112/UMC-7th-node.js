@@ -32,7 +32,8 @@ export const handleMemberSignUp = async (req, res, next) => {
 
   try {
     const member = await memberSignUp(bodyToMember(req.body));
-    res.status(StatusCodes.OK).json({ result: member });
+
+    res.status(StatusCodes.CREATED).json({ result: member });
   } catch (error) {
     next(error);
   }
