@@ -1,7 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import { handleMemberSignUp } from "./controllers/user.controllers.js";
+import { handleMemberSignUp } from "./controllers/member.controllers.js";
 import {
   handleStoreAdd,
   handleStoreMissionRead,

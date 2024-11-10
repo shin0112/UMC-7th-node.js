@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
-import { bodyToMember } from "../dtos/user.dto.js";
-import { memberSignUp } from "../services/user.service.js";
+import { bodyToMember } from "../dtos/member.dto.js";
+import { memberSignUp } from "../services/member.service.js";
 
 export const handleMemberSignUp = async (req, res, next) => {
   console.log("회원가입을 요청했습니다!");
