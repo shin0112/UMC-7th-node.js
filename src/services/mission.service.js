@@ -10,6 +10,7 @@ import {
   getMission,
   getMemberMissionListByMemberId,
   getMemberMissionListByStatus,
+  getMemberMissionByMemberIdAndMissionId,
 } from "../repositories/mission.repository.js";
 
 export const createMission = async (storeId, data) => {
@@ -24,8 +25,16 @@ export const createMission = async (storeId, data) => {
 };
 
 export const createMemberMission = async (missionId, memberId) => {
-  const memberMissionId = await addMemberMission(missionId, memberId);
-  const memberMission = await getMemberMission(memberMissionId);
+  const memberMissionId = await getMemberMissionByMemberIdAndMissionId(
+    memberId,
+    missionId
+  );
+  if (memberMissionId) {
+    throw new Error("이미 도전 중인 미션입니다.");
+  }
+
+  const newMemberMissionId = await addMemberMission(missionId, memberId);
+  const memberMission = await getMemberMissionById(newMemberMissionId);
 
   return responseFromMemberMission(memberMission);
 };
