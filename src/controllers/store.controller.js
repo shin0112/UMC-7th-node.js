@@ -5,6 +5,15 @@ import {
   readMissionsByStoreId,
 } from "../services/store.service.js";
 
+/**
+ * 가게 특정 지역에 추가하기
+ * @param {*} req 
+ * @param {{
+    "name": "가게",
+    "address": "부산시 어쩌구1"
+}} res 
+ * @param {*} next 
+ */
 export const handleStoreAdd = async (req, res, next) => {
   const region = req.query.region;
   const store = await createStore(bodyToStore(req.body, region));
@@ -12,6 +21,27 @@ export const handleStoreAdd = async (req, res, next) => {
   res.status(StatusCodes.CREATED).json({ result: store });
 };
 
+/**
+ * 가게 리뷰 리스트 조회하기
+ * @param {{
+    "memberId": 1,
+    "star": 8.9,
+    "content": "맛집짱이에요"
+}} req 
+ * @param {[
+    {
+        "id": 1,
+        "money": 10000,
+        "score": 500
+    },
+    {
+        "id": 2,
+        "money": 10000,
+        "score": 500
+    }
+]} res 
+ * @param {*} next 
+ */
 export const handleStoreMissionRead = async (req, res, next) => {
   const missions = await readMissionsByStoreId(parseInt(req.params.storeId));
 
