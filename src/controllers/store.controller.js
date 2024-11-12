@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import { bodyToStore } from "../dtos/store.dto.js";
 import {
   createStore,
-  readMissionsByStoreId,
+  readMissionListByStoreId,
 } from "../services/store.service.js";
 
 /**
@@ -18,7 +18,7 @@ export const handleStoreCreate = async (req, res, next) => {
   try {
     const store = await createStore(bodyToStore(req.body, req.query.region));
 
-    res.status(StatusCodes.CREATED).json({ result: store });
+    res.status(StatusCodes.CREATED).success(store);
   } catch (error) {
     next(error);
   }
@@ -47,9 +47,11 @@ export const handleStoreCreate = async (req, res, next) => {
  */
 export const handleStoreMissionRead = async (req, res, next) => {
   try {
-    const missions = await readMissionsByStoreId(parseInt(req.params.storeId));
+    const missionList = await readMissionListByStoreId(
+      parseInt(req.params.storeId)
+    );
 
-    res.status(StatusCodes.OK).json(missions);
+    res.status(StatusCodes.OK).success(missionList);
   } catch (error) {
     next(error);
   }

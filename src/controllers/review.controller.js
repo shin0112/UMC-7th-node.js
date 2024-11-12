@@ -40,12 +40,12 @@ import {
  */
 export const handleStoreReviewListRead = async (req, res, next) => {
   try {
-    const reviews = await readStoreReviewList(
+    const reviewList = await readStoreReviewList(
       parseInt(req.params.storeId),
       typeof req.query.cursor === "string" ? parseInt(req.query.cursor) : 0
     );
 
-    res.status(StatusCodes.OK).json(reviews);
+    res.status(StatusCodes.OK).success(reviewList);
   } catch (error) {
     next(error);
   }
@@ -74,7 +74,7 @@ export const handleReviewCreate = async (req, res, next) => {
       bodyToReview(req.body)
     );
 
-    res.status(StatusCodes.CREATED).json({ result: review });
+    res.status(StatusCodes.CREATED).success(review);
   } catch (error) {
     next(error);
   }

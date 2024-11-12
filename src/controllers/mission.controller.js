@@ -28,7 +28,7 @@ export const handleMissionCreate = async (req, res, next) => {
       bodyToMission(req.body)
     );
 
-    res.status(StatusCodes.CREATED).json({ result: mission });
+    res.status(StatusCodes.CREATED).success(mission);
   } catch (error) {
     next(error);
   }
@@ -53,7 +53,7 @@ export const handleMemberMissionCreate = async (req, res, next) => {
       req.body.memberId
     );
 
-    res.status(StatusCodes.CREATED).json({ result: memberMission });
+    res.status(StatusCodes.CREATED).success(memberMission);
   } catch (error) {
     next(error);
   }
@@ -87,5 +87,5 @@ export const handleMemberMissionListReadByStatus = async (req, res, next) => {
     ? await readMemberMissionListByStatus(memberId, status)
     : await readMemberMissionList(memberId);
 
-  res.status(StatusCodes.OK).json({ result: missions });
+  res.status(StatusCodes.OK).success(missions);
 };

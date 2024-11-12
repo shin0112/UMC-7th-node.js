@@ -25,7 +25,7 @@ export const createStore = async (data) => {
   return responseFromStore(store);
 };
 
-export const readMissionsByStoreId = async (storeId) => {
+export const readMissionListByStoreId = async (storeId) => {
   const missionId = await getMissionsByStoreId(storeId);
 
   return responseFromMissionList(missionId);
