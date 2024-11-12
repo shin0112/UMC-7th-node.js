@@ -32,10 +32,7 @@ export const createMemberMission = async (missionId, memberId) => {
   );
 
   if (getMemberMission) {
-    throw new AlreadyChallengingMission(
-      "이미 도전 중인 미션입니다.",
-      getMemberMission
-    );
+    throw new AlreadyChallengingMission(getMemberMission);
   }
 
   const newMemberMissionId = await addMemberMission(missionId, memberId);

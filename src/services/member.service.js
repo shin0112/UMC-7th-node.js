@@ -18,10 +18,7 @@ export const memberSignUp = async (data) => {
   });
 
   if (joinMemberId === null) {
-    throw new DuplicateMemberEmailError(
-      "이미 존재하는 이메일입니다.",
-      data.email
-    );
+    throw new DuplicateMemberEmailError(data.email);
   }
 
   for (const preference of data.preferences) {

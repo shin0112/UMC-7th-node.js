@@ -1,4 +1,5 @@
 import { prisma } from "../db.config.js";
+import { AlreadyExistStore } from "../error/store.error.js";
 
 export const addStore = async (data) => {
   const store = await prisma.store.findFirst({
@@ -6,7 +7,7 @@ export const addStore = async (data) => {
   });
 
   if (store) {
-    return null;
+    throw new AlreadyExistStore(data);
   }
 
   const created = await prisma.store.create({ data: data });

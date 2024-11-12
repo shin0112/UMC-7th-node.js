@@ -1,9 +1,8 @@
 export class DuplicateMemberEmailError extends Error {
   errorCode = "M001";
 
-  constructor(reason, data) {
-    super(reason);
-    this.reason = reason;
+  constructor(data) {
+    super("이미 존재하는 이메일입니다.");
     this.data = data;
   }
 }
