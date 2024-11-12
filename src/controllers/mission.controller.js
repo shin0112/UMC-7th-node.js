@@ -14,8 +14,10 @@ import {
     "score": 500
 }} req 
  * @param {{
-    "result": {
-        "id": 4,
+    "resultType": "SUCCESS",
+    "error": null,
+    "success": {
+        "id": 1,
         "money": 10000,
         "score": 500
     }
@@ -40,8 +42,10 @@ export const handleMissionCreate = async (req, res, next) => {
     "memberId": 1
 }} req
  * @param {{
-    "result": {
-        "id": 3,
+    "resultType": "SUCCESS",
+    "error": null,
+    "success": {
+        "id": 1,
         "status": "CHALLENGING"
     }
 }} res
@@ -63,7 +67,9 @@ export const handleMemberMissionCreate = async (req, res, next) => {
  * 내 미션 리스트 조회하기 (param 존재 시 상태로 검색)
  * @param {*} req 
  * @param {{
-    "result": {
+    "resultType": "SUCCESS",
+    "error": null,
+    "success": {
         "missions": [
             {
                 "id": 1,
@@ -71,7 +77,7 @@ export const handleMemberMissionCreate = async (req, res, next) => {
                 "score": 500
             },
             {
-                "id": 1,
+                "id": 2,
                 "money": 10000,
                 "score": 500
             }
