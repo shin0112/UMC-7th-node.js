@@ -21,7 +21,7 @@ export const getStoreById = async (storeId) => {
   return store;
 };
 
-export const getRegionIdByRegion = async (regionName) => {
+export const getRegionByName = async (regionName) => {
   const region = await prisma.region.findFirstOrThrow({
     where: { name: regionName },
   });
