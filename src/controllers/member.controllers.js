@@ -15,15 +15,17 @@ import { memberSignUp } from "../services/member.service.js";
         1
     ]
 }} req 
- * @param {
-    "result": {
+ * @param {{
+    "resultType": "SUCCESS",
+    "error": null,
+    "success": {
         "email": "email@test.com111",
         "name": "신주은",
         "preferCategory": [
             "양식"
         ]
     }
-}*} res 
+}} res 
  * @param {*} next 
  */
 export const handleMemberSignUp = async (req, res, next) => {
@@ -33,7 +35,7 @@ export const handleMemberSignUp = async (req, res, next) => {
   try {
     const member = await memberSignUp(bodyToMember(req.body));
 
-    res.status(StatusCodes.CREATED).json({ result: member });
+    res.status(StatusCodes.CREATED).success(member);
   } catch (error) {
     next(error);
   }
