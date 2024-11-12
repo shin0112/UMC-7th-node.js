@@ -5,3 +5,10 @@ export const bodyToStore = (body, region) => {
     address: body.address,
   };
 };
+
+export const responseFromStore = (store) => {
+  return {
+    id: store.id,
+    name: store.name,
+  };
+};

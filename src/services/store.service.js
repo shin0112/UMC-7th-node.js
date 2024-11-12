@@ -1,22 +1,28 @@
+import { responseFromMissionList } from "../dtos/mission.dto.js";
+import { responseFromStore } from "../dtos/store.dto.js";
 import {
   addStore,
+  getMissionsByStoreId,
   getRegionIdByRegion,
+  getStoreById,
 } from "../repositories/store.repository.js";
 
 export const createStore = async (data) => {
-  const regionResult = await getRegionIdByRegion(data.region);
+  const region = await getRegionIdByRegion(data.region);
+  const regionId = region.id;
 
-  if (!regionResult.length) {
-    throw new Error("해당 지역이 존재하지 않습니다.");
-  }
-
-  const regionId = regionResult[0].id;
-
-  await addStore({
+  const storeId = await addStore({
     name: data.name,
     address: data.address,
     regionId: regionId,
   });
 
-  return;
+  const store = await getStoreById(storeId);
+  return responseFromStore(store);
+};
+
+export const readMissionsByStoreId = async (storeId) => {
+  const missionId = await getMissionsByStoreId(storeId);
+
+  return responseFromMissionList(missionId);
 };

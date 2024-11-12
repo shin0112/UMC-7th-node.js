@@ -1,35 +1,38 @@
-import { pool } from "../db.config.js";
+import { prisma } from "../db.config.js";
 
 export const addStore = async (data) => {
-  const conn = await pool.getConnection();
+  const store = await prisma.store.findFirst({
+    where: { address: data.address },
+  });
 
-  try {
-    const [store] = await pool.query(
-      `INSERT INTO store (name, address, region_id) VALUES (?, ?, ?);`,
-      [data.name, data.address, data.regionId]
-    );
-    store.insertId;
-  } catch (err) {
-    throw new Error(`오류 발생. 요청 파라미터 확인 필요. (${err})`);
-  } finally {
-    conn.release();
+  if (store) {
+    return null;
   }
+
+  const created = await prisma.store.create({ data: data });
+  return created.id;
 };
 
-export const getRegionIdByRegion = async (region) => {
-  const conn = await pool.getConnection();
+export const getStoreById = async (storeId) => {
+  const store = await prisma.store.findFirstOrThrow({
+    where: { id: storeId },
+  });
 
-  try {
-    const [regionId] = await pool.query(
-      `select r.id from region r where r.name = ?`,
-      [region]
-    );
+  return store;
+};
 
-    console.log(regionId);
-    return regionId;
-  } catch (err) {
-    throw new Error(`오류 발생. 요청 파라미터 확인 필요. (${err})`);
-  } finally {
-    conn.release();
-  }
+export const getRegionIdByRegion = async (regionName) => {
+  const region = await prisma.region.findFirstOrThrow({
+    where: { name: regionName },
+  });
+
+  return region;
+};
+
+export const getMissionsByStoreId = async (storeId) => {
+  const missions = await prisma.mission.findMany({
+    where: { storeId: storeId },
+  });
+
+  return missions;
 };
