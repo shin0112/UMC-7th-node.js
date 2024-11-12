@@ -12,12 +12,14 @@ export const bodyToMember = (body) => {
   };
 };
 
-export const responseFromMember = (member, preferences) => {
-  const preferFoods = preferences.map((preference) => preference.food.name);
+export const responseFromMember = (member, preferenceList) => {
+  const preferFoodList = preferenceList.map(
+    (preference) => preference.food.name
+  );
 
   return {
     email: member.email,
     name: member.name,
-    preferCategory: preferFoods,
+    preferCategory: preferFoodList,
   };
 };

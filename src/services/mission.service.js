@@ -3,6 +3,7 @@ import {
   responseFromMemberMissionList,
   responseFromMission,
 } from "../dtos/mission.dto.js";
+import { AlreadyChallengingMission } from "../error/mission.error.js";
 import {
   addMemberMission,
   addMission,
@@ -25,12 +26,13 @@ export const createMission = async (storeId, data) => {
 };
 
 export const createMemberMission = async (missionId, memberId) => {
-  const memberMissionId = await getMemberMissionByMemberIdAndMissionId(
+  const getMemberMission = await getMemberMissionByMemberIdAndMissionId(
     memberId,
     missionId
   );
-  if (memberMissionId) {
-    throw new Error("이미 도전 중인 미션입니다.");
+
+  if (getMemberMission) {
+    throw new AlreadyChallengingMission(getMemberMission);
   }
 
   const newMemberMissionId = await addMemberMission(missionId, memberId);
