@@ -35,6 +35,8 @@ export const updateMember = async (data) => {
       phone: data.phone,
     },
   });
+
+  return updated.id;
 };
 
 // 음식 선호 카테고리 매핑
