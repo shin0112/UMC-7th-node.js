@@ -23,3 +23,14 @@ export const responseFromMember = (member, preferenceList) => {
     preferCategory: preferFoodList,
   };
 };
+
+export const bodyToMemberUpdate = (body) => {
+  const inactiveDate = new Date(body.inactiveDate);
+
+  return {
+    name: body.name,
+    nickname: body.nickname,
+    inactiveDate,
+    phone: body.phone,
+  };
+};

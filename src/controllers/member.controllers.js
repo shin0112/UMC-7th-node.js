@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { bodyToMember } from "../dtos/member.dto.js";
+import { bodyToMember, bodyToMemberUpdate } from "../dtos/member.dto.js";
 import { memberSignUp } from "../services/member.service.js";
 
 /**
@@ -39,4 +39,13 @@ export const handleMemberSignUp = async (req, res, next) => {
   // } catch (error) {
   //   next(error);
   // }
+};
+
+export const handleMemberUpdate = async (req, res, next) => {
+  const member = await memberUpdate(
+    parseInt(req.params.memberId),
+    bodyToMemberUpdate(req.body)
+  );
+
+  res.status(StatusCodes.OK).success(member);
 };
