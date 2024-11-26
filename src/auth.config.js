@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as KakaoStrategy } from "passport-kakao-oauth2";
 import { prisma } from "./db.config.js";
 
 dotenv.config();
@@ -19,11 +20,20 @@ export const googleStrategy = new GoogleStrategy(
   }
 );
 
-const googleVerify = async (profile) => {
-  const email = profile.emails?.[0]?.value;
-  if (!email) {
-    throw new Error(`profile.email was not found: ${profile}`);
+export const kakaoStrategy = new KakaoStrategy(
+  {
+    clientID: process.env.KAKAO_REST_API_KEY,
+    callbackURL: "http://localhost:3000/oauth2/callback/kakao",
+  },
+  (accessToken, refreshToken, profile, cb) => {
+    return googleVerify(profile)
+      .then((user) => cb(null, user))
+      .catch((err) => cb(err));
   }
+);
+
+const googleVerify = async (profile) => {
+  const email = profile.emails?.[0]?.value ?? "kakao@email.com";
 
   const member = await prisma.member.findFirst({ where: { email } });
   if (member !== null) {
