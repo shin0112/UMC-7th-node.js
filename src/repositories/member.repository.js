@@ -23,6 +23,22 @@ export const getMember = async (memberId) => {
   return member;
 };
 
+export const updateMember = async (data) => {
+  const member = getMember(data.id);
+
+  const updated = await prisma.member.update({
+    where: { id: data.id },
+    data: {
+      name: data.name,
+      nickname: data.nickname,
+      inactiveDate: data.inactiveDate,
+      phone: data.phone,
+    },
+  });
+
+  return updated.id;
+};
+
 // 음식 선호 카테고리 매핑
 export const addMemberFood = async (memberId, foodId) => {
   await prisma.MemberFood.create({
