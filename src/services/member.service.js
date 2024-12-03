@@ -5,6 +5,7 @@ import {
   getMember,
   getMemberFoodByMemberId,
   addMemberFood,
+  updateMember,
 } from "../repositories/member.repository.js";
 
 export const memberSignUp = async (data) => {
@@ -26,6 +27,21 @@ export const memberSignUp = async (data) => {
   }
 
   const member = await getMember(joinMemberId);
+  const preferenceList = await getMemberFoodByMemberId(joinMemberId);
+
+  return responseFromMember(member, preferenceList);
+};
+
+export const memberUpdate = async (memberId, data) => {
+  const updateMemberId = await updateMember({
+    id: memberId,
+    name: data.name,
+    nickname: data.nickname,
+    inactiveDate: data.inactiveDate,
+    phone: data.phone,
+  });
+
+  const member = await getMember(updateMemberId);
   const preferenceList = await getMemberFoodByMemberId(joinMemberId);
 
   return responseFromMember(member, preferenceList);
